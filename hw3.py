@@ -25,7 +25,7 @@ def readfile(path, label):
 
 
 
-workspace_dir = './food-11'
+workspace_dir = '/wzh/hw3/food-11'
 print("Reading data")
 train_x, train_y = readfile(os.path.join(workspace_dir, "training"), True)
 print("Size of training data = {}".format(len(train_x)))
@@ -226,7 +226,7 @@ with torch.no_grad():
             prediction.append(y)
 
 
-with open("./drive/My Drive/Hung-yi Lee DLML HW/hw3/predict.csv", 'w') as f:
+with open("/wzh/hw3/predict.csv", 'w') as f:
     f.write('Id,Category\n')
     for i, y in  enumerate(prediction):
         f.write('{},{}\n'.format(i, y))
