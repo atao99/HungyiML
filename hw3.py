@@ -23,8 +23,6 @@ def readfile(path, label):
     else:
       return x
 
-
-
 workspace_dir = '/wzh/hw3/food-11'
 print("Reading data")
 train_x, train_y = readfile(os.path.join(workspace_dir, "training"), True)
@@ -33,10 +31,6 @@ val_x, val_y = readfile(os.path.join(workspace_dir, "validation"), True)
 print("Size of validation data = {}".format(len(val_x)))
 test_x = readfile(os.path.join(workspace_dir, "testing"), False)
 print("Size of Testing data = {}".format(len(test_x)))
-
-
-
-
 
 train_transform = transforms.Compose([
     transforms.ToPILImage(), 
@@ -50,17 +44,9 @@ test_transform = transforms.Compose([
     transforms.ToTensor(),
 ])
 
-
-
-
-
-
-
-
 class ImgDataset(Dataset):
     def __init__(self, x, y=None, transform=None):
         self.x = x
-        
         self.y = y
         if y is not None:
             self.y = torch.LongTensor(y)
@@ -81,7 +67,6 @@ class ImgDataset(Dataset):
 batch_size = 128
 train_set = ImgDataset(train_x, train_y, train_transform)
 val_set = ImgDataset(val_x, val_y, test_transform)
-
 train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True)
 val_loader = DataLoader(val_set, batch_size=batch_size, shuffle=False)
 
@@ -91,9 +76,6 @@ val_loader = DataLoader(val_set, batch_size=batch_size, shuffle=False)
 class Classifier(nn.Module):
     def __init__(self):
         super(Classifier, self).__init__()
-        
-        
-        
         self.cnn = nn.Sequential(
             nn.Conv2d(3, 64, 3, 1, 1),  
             nn.BatchNorm2d(64),
@@ -120,7 +102,6 @@ class Classifier(nn.Module):
             nn.ReLU(),
             nn.MaxPool2d(2, 2, 0),       
         )
-        
         self.fc = nn.Sequential(
             nn.Linear(512*4*4, 1024),
             nn.ReLU(),
@@ -130,7 +111,6 @@ class Classifier(nn.Module):
         )
     def forward(self, x):
         out = self.cnn(x)
-        
         out = out.view(out.size()[0], -1)
         return self.fc(out)
 
